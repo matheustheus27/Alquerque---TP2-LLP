@@ -4,10 +4,13 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Alquerque; }
+namespace Ui {
+    class Alquerque;
+}
 QT_END_NAMESPACE
 
 class Hole;
+
 class Alquerque : public QMainWindow {
     Q_OBJECT
 

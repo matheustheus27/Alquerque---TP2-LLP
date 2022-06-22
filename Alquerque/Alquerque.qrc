@@ -21,5 +21,7 @@
         <file alias="RedTurn">Assets/RedPlayer_Turn.png</file>
         <file alias="RedVictory">Assets/RedPlayer_Victory.png</file>
         <file alias="Icon">Assets/Icon.png</file>
+        <file alias="EmptySelectable">Assets/EmptyButton_Selectable.png</file>
+        <file alias="EmptyDisabled">Assets/EmptyButton_Disabled.png</file>
     </qresource>
 </RCC>
