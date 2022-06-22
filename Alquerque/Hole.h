@@ -13,9 +13,12 @@ class Hole : public QPushButton
 
 public:
     enum State {
-        EmptyState,
-        RedState,
-        BlueState,
+        EmptyAbleState,
+        EmptyDisabledState,
+        RedAbleState,
+        RedDisabledState,
+        BlueAbleState,
+        BlueDisabledState,
     };
     Q_ENUM(State)
 

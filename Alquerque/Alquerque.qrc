@@ -23,5 +23,6 @@
         <file alias="Icon">Assets/Icon.png</file>
         <file alias="EmptySelectable">Assets/EmptyButton_Selectable.png</file>
         <file alias="EmptyDisabled">Assets/EmptyButton_Disabled.png</file>
+        <file alias="GameFont">Assets/04B.TTF</file>
     </qresource>
 </RCC>

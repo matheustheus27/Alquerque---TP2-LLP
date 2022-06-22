@@ -15,16 +15,28 @@ class Alquerque : public QMainWindow {
     Q_OBJECT
 
 public:
+    enum Player {
+        RedPlayer,
+        BluePlayer
+    };
+
     Alquerque(QWidget *parent = nullptr);
     ~Alquerque();
 
+signals:
+    void endTurn();
+
 private:
     Ui::Alquerque *ui;
-    Hole* m_holes[25];
+    Hole* m_holes[5][5];
+    Player m_player;
 
 private slots:
     void Play(int id);
     void Restart();
-    void About();
+    void SwitchPlayer();
+
+    void About(); 
+    void UpdateGameStatus();
 };
 #endif // ALQUERQUE_H

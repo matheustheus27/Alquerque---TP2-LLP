@@ -24,7 +24,10 @@
   </property>
   <property name="font">
    <font>
-    <family>04b</family>
+    <family>:/GameFont</family>
+    <pointsize>9</pointsize>
+    <italic>false</italic>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -36,8 +39,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow {
-	
 	background-color: rgb(34, 34, 34);
+	font: 9pt &quot;:/GameFont&quot;;
 }</string>
   </property>
   <property name="toolButtonStyle">
@@ -62,6 +65,7 @@
    <property name="styleSheet">
     <string notr="true">#centralwidget {
 	background: url(':/GameBoard');
+	font: 9pt &quot;:/GameFont&quot;;
 }</string>
    </property>
    <widget class="Hole" name="hole22">
@@ -1418,7 +1422,6 @@
    <property name="styleSheet">
     <string notr="true">QMenuBar {
 	background-color: rgb(89, 89, 89);
-	font-color: rgb(255, 255, 255);
 }</string>
    </property>
    <widget class="QMenu" name="menuJogo">
@@ -1430,7 +1433,6 @@
     <property name="styleSheet">
      <string notr="true">QMenu{
 	background-color: rgb(89, 89, 89);
-	font-color: rgb(255, 255, 255);
 }</string>
     </property>
     <property name="title">
@@ -1448,7 +1450,6 @@
     <property name="styleSheet">
      <string notr="true">QMenu{
 	background-color: rgb(89, 89, 89);
-	font-color: rgb(255, 255, 255);
 }</string>
     </property>
     <property name="title">
@@ -1468,6 +1469,11 @@
    <property name="text">
     <string>Reiniciar</string>
    </property>
+   <property name="font">
+    <font>
+     <family>04b</family>
+    </font>
+   </property>
   </action>
   <action name="actionSair">
    <property name="icon">
@@ -1477,6 +1483,11 @@
    <property name="text">
     <string>Sair</string>
    </property>
+   <property name="font">
+    <font>
+     <family>04b</family>
+    </font>
+   </property>
   </action>
   <action name="actionAjuda">
    <property name="icon">
@@ -1485,6 +1496,11 @@
    </property>
    <property name="text">
     <string>Ajuda</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>04b</family>
+    </font>
    </property>
   </action>
  </widget>
