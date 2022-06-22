@@ -1,0 +1,1502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Alquerque</class>
+ <widget class="QMainWindow" name="Alquerque">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>04b</family>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Alquerque</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Alquerque.qrc">
+    <normaloff>:/Icon</normaloff>:/Icon</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	
+	background-color: rgb(34, 34, 34);
+}</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>500</width>
+     <height>600</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>500</width>
+     <height>600</height>
+    </size>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#centralwidget {
+	background: url(':/GameBoard');
+}</string>
+   </property>
+   <widget class="Hole" name="hole22">
+    <property name="geometry">
+     <rect>
+      <x>215</x>
+      <y>265</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>2</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole12">
+    <property name="geometry">
+     <rect>
+      <x>218</x>
+      <y>170</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>1</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole10">
+    <property name="geometry">
+     <rect>
+      <x>26</x>
+      <y>170</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>1</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole00">
+    <property name="geometry">
+     <rect>
+      <x>24</x>
+      <y>70</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole24">
+    <property name="geometry">
+     <rect>
+      <x>407</x>
+      <y>265</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>2</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>4</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole41">
+    <property name="geometry">
+     <rect>
+      <x>122</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>4</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>1</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole13">
+    <property name="geometry">
+     <rect>
+      <x>314</x>
+      <y>170</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>1</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>3</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole04">
+    <property name="geometry">
+     <rect>
+      <x>408</x>
+      <y>70</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>5</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole32">
+    <property name="geometry">
+     <rect>
+      <x>218</x>
+      <y>360</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>3</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole44">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>4</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>4</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole43">
+    <property name="geometry">
+     <rect>
+      <x>314</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>4</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>3</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole31">
+    <property name="geometry">
+     <rect>
+      <x>122</x>
+      <y>360</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>3</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>1</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole42">
+    <property name="geometry">
+     <rect>
+      <x>218</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>4</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole40">
+    <property name="geometry">
+     <rect>
+      <x>26</x>
+      <y>450</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>4</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole14">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>170</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>1</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>4</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole33">
+    <property name="geometry">
+     <rect>
+      <x>314</x>
+      <y>360</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>3</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>3</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole11">
+    <property name="geometry">
+     <rect>
+      <x>122</x>
+      <y>170</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>1</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>1</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole02">
+    <property name="geometry">
+     <rect>
+      <x>216</x>
+      <y>70</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>3</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole30">
+    <property name="geometry">
+     <rect>
+      <x>26</x>
+      <y>360</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>3</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole01">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>70</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>2</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole21">
+    <property name="geometry">
+     <rect>
+      <x>119</x>
+      <y>265</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>2</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>1</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole20">
+    <property name="geometry">
+     <rect>
+      <x>23</x>
+      <y>265</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>2</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole23">
+    <property name="geometry">
+     <rect>
+      <x>311</x>
+      <y>265</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>2</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>3</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole34">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>360</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>3</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>4</number>
+    </property>
+   </widget>
+   <widget class="Hole" name="hole03">
+    <property name="geometry">
+     <rect>
+      <x>312</x>
+      <y>70</y>
+      <width>70</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/Empty</normaloff>:/Empty</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <property name="row" stdset="0">
+     <number>0</number>
+    </property>
+    <property name="col" stdset="0">
+     <number>4</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="restart">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>10</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/InRestart</normaloff>:/InRestart</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="help">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>10</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/InHelp</normaloff>:/InHelp</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exit">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>10</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/InExit</normaloff>:/InExit</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="playerTurn">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>530</y>
+      <width>511</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/RedTurn</normaloff>:/RedTurn</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>400</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>500</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>04b</family>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+	background-color: rgb(89, 89, 89);
+	font-color: rgb(255, 255, 255);
+}</string>
+   </property>
+   <widget class="QMenu" name="menuJogo">
+    <property name="font">
+     <font>
+      <family>04b</family>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu{
+	background-color: rgb(89, 89, 89);
+	font-color: rgb(255, 255, 255);
+}</string>
+    </property>
+    <property name="title">
+     <string>Jogo</string>
+    </property>
+    <addaction name="actionNovo"/>
+    <addaction name="actionSair"/>
+   </widget>
+   <widget class="QMenu" name="menuSobre">
+    <property name="font">
+     <font>
+      <family>04b</family>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu{
+	background-color: rgb(89, 89, 89);
+	font-color: rgb(255, 255, 255);
+}</string>
+    </property>
+    <property name="title">
+     <string>Sobre</string>
+    </property>
+    <addaction name="actionAjuda"/>
+   </widget>
+   <addaction name="menuJogo"/>
+   <addaction name="menuSobre"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNovo">
+   <property name="icon">
+    <iconset resource="Alquerque.qrc">
+     <normaloff>:/InRestart</normaloff>:/InRestart</iconset>
+   </property>
+   <property name="text">
+    <string>Reiniciar</string>
+   </property>
+  </action>
+  <action name="actionSair">
+   <property name="icon">
+    <iconset resource="Alquerque.qrc">
+     <normaloff>:/InExit</normaloff>:/InExit</iconset>
+   </property>
+   <property name="text">
+    <string>Sair</string>
+   </property>
+  </action>
+  <action name="actionAjuda">
+   <property name="icon">
+    <iconset resource="Alquerque.qrc">
+     <normaloff>:/InHelp</normaloff>:/InHelp</iconset>
+   </property>
+   <property name="text">
+    <string>Ajuda</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Hole</class>
+   <extends>QPushButton</extends>
+   <header location="global">Hole.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="Alquerque.qrc"/>
+ </resources>
+ <connections/>
+</ui>

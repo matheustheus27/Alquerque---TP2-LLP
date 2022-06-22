@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="BlueAble">Assets/BlueButton_Able.png</file>
+        <file alias="BlueDisabled">Assets/BlueButton_Disabled.png</file>
+        <file alias="BlueSelectable">Assets/BlueButton_Selectable.png</file>
+        <file alias="BlueSelected">Assets/BlueButton_Selected.png</file>
+        <file alias="BlueTurn">Assets/BluePlayer_Turn.png</file>
+        <file alias="BlueVictory">Assets/BluePlayer_Victory.png</file>
+        <file alias="Empty">Assets/EmptyButton.png</file>
+        <file alias="GameBoard">Assets/GameBoard.png</file>
+        <file alias="GameExit">Assets/GameButton_Exit.png</file>
+        <file alias="GameHelp">Assets/GameButton_Help.png</file>
+        <file alias="GamePlay">Assets/GameButton_Play.png</file>
+        <file alias="InExit">Assets/InGameButton_Exit.png</file>
+        <file alias="InHelp">Assets/InGameButton_Help.png</file>
+        <file alias="InRestart">Assets/InGameButton_Restart.png</file>
+        <file alias="RedAble">Assets/RedButton_Able.png</file>
+        <file alias="RedDisabled">Assets/RedButton_Disabled.png</file>
+        <file alias="RedSelectable">Assets/RedButton_Selectable.png</file>
+        <file alias="RedSelected">Assets/RedButton_Selected.png</file>
+        <file alias="RedTurn">Assets/RedPlayer_Turn.png</file>
+        <file alias="RedVictory">Assets/RedPlayer_Victory.png</file>
+        <file alias="Icon">Assets/Icon.png</file>
+    </qresource>
+</RCC>
