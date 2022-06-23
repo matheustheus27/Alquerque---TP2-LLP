@@ -10,15 +10,13 @@ class Hole : public QPushButton
     Q_PROPERTY(int col READ col WRITE setCol)
     Q_PROPERTY(State state READ state WRITE setState NOTIFY changedState)
     Q_PROPERTY(bool marked READ isMarked WRITE setMarked NOTIFY changedMarked)
+    Q_PROPERTY(bool e_enabled READ isEnabled WRITE setEnabled NOTIFY changedEnabled)
 
 public:
     enum State {
-        EmptyAbleState,
-        EmptyDisabledState,
-        RedAbleState,
-        RedDisabledState,
-        BlueAbleState,
-        BlueDisabledState,
+        EmptyState,
+        RedState,
+        BlueState
     };
     Q_ENUM(State)
 
@@ -37,14 +35,19 @@ public:
     bool isMarked() const {return m_marked;}
     void setMarked(bool marked);
 
+    bool isEnabled() const {return m_enabled;}
+    void setEnabled(bool e_enabled);
+
 signals:
     void changedState(Hole::State state);
     void changedMarked(bool marked);
+    void changedEnabled(bool e_enabled);
 
 private:
     int m_row;
     int m_col;
     bool m_marked;
+    bool m_enabled;
     State m_state;
 
 public slots:

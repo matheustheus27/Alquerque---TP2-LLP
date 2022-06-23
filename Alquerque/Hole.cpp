@@ -1,8 +1,9 @@
 #include "Hole.h"
 
-Hole::Hole(QWidget *parent) : QPushButton(parent), m_row(0), m_col(0), m_state(Hole::EmptyAbleState), m_marked(false) {
+Hole::Hole(QWidget *parent) : QPushButton(parent), m_row(0), m_col(0), m_state(Hole::EmptyState), m_marked(false), m_enabled(false) {
     QObject::connect(this, SIGNAL(changedState(Hole::State)), this, SLOT(UpdateHole()));
     QObject::connect(this, SIGNAL(changedMarked(bool)), this, SLOT(UpdateHole()));
+    QObject::connect(this, SIGNAL(changedEnabled(bool)), this, SLOT(UpdateHole()));
 
     this->UpdateHole();
 }
@@ -25,9 +26,17 @@ void Hole::setMarked(bool marked) {
     }
 }
 
+void Hole::setEnabled(bool e_enabled) {
+    if(m_enabled != e_enabled) {
+        m_enabled = e_enabled;
+        emit changedEnabled(e_enabled);
+    }
+}
+
 void Hole::Reset() {
-    m_state = Hole::EmptyAbleState;
+    m_state = Hole::EmptyState;
     m_marked = false;
+    m_enabled = false;
 
     this->UpdateHole();
 }
@@ -36,29 +45,32 @@ void Hole::UpdateHole() {
     QIcon icon;
 
     switch (m_state) {
-        case Hole::EmptyAbleState:
-            icon.addPixmap(QPixmap(m_marked ? ":/EmptySelectable" : ":/Empty"));
-            icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);
+        case Hole::EmptyState:
+            if(m_enabled) {
+                icon.addPixmap(QPixmap(m_marked ? ":/EmptySelectable" : ":/Empty"));
+                icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);
+            } else {
+                icon.addPixmap(QPixmap(":/EmptyDisabled"));
+                icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);
+            }
             break;
-        case Hole::EmptyDisabledState:
-            icon.addPixmap(QPixmap(":/EmptyDisabled"));
-            icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);
+        case Hole::RedState:
+            if(m_enabled) {
+                icon.addPixmap(QPixmap(m_marked ? ":/RedSelected" : ":/RedAble"));
+                icon.addPixmap(QPixmap(":/RedDisabled"), QIcon::Disabled);
+            } else {
+                icon.addPixmap(QPixmap(":/RedDisabled"));
+                icon.addPixmap(QPixmap(":/RedDisabled"), QIcon::Disabled);
+            }
             break;
-        case Hole::RedAbleState:
-            icon.addPixmap(QPixmap(m_marked ? ":/RedSelected" : ":/RedAble"));
-            icon.addPixmap(QPixmap(":/RedDisabled"), QIcon::Disabled);
-            break;
-        case Hole::RedDisabledState:
-            icon.addPixmap(QPixmap(":/RedDisabled"));
-            icon.addPixmap(QPixmap(":/RedDisabled"), QIcon::Disabled);
-            break;
-        case Hole::BlueAbleState:
-            icon.addPixmap(QPixmap(m_marked ? ":/BlueSelected" : ":/BlueAble"));
-            icon.addPixmap(QPixmap(":/BlueDisabled"), QIcon::Disabled);
-            break;
-        case Hole::BlueDisabledState:
-            icon.addPixmap(QPixmap(":/BlueDisabled"));
-            icon.addPixmap(QPixmap(":/BlueDisabled"), QIcon::Disabled);
+        case Hole::BlueState:
+            if(m_enabled) {
+                icon.addPixmap(QPixmap(m_marked ? ":/BlueSelected" : ":/BlueAble"));
+                icon.addPixmap(QPixmap(":/BlueDisabled"), QIcon::Disabled);
+            } else {
+                icon.addPixmap(QPixmap(":/BlueDisabled"));
+                icon.addPixmap(QPixmap(":/BlueDisabled"), QIcon::Disabled);
+            }
             break;
         default:
             Q_UNREACHABLE();

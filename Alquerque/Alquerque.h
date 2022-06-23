@@ -20,6 +20,11 @@ public:
         BluePlayer
     };
 
+    enum Jogada {
+        Origin,
+        Destiny
+    };
+
     Alquerque(QWidget *parent = nullptr);
     ~Alquerque();
 
@@ -29,11 +34,14 @@ signals:
 private:
     Ui::Alquerque *ui;
     Hole* m_holes[5][5];
+    Hole* m_oldHole;
+    Jogada m_play;
     Player m_player;
 
 private slots:
     void Play(int id);
     void Restart();
+    void Rulebook();
     void SwitchPlayer();
 
     void About(); 
