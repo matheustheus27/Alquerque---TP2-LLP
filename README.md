@@ -1,8 +1,8 @@
 # Alquerque---TP2-LLP
   Projeto para a disciplina de Linguagens de Programação
 
-  ## Discente:
+  #### Discente:
       Matheus Thiago de Souza Ferreira
     
- ## Docente:
+ #### Docente:
       Andrei Rimsa Álvares
