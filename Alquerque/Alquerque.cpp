@@ -118,7 +118,9 @@ void Alquerque::Play(int id) {
 
                 this->LockButtons(hole);
 
-                this->UnlockButtons();
+                this->UnlockButtons(m_oldHole);
+
+                this->UnlockEnemyButtons(hole);
 
                 m_oldHole->setEnabled(true);
                 m_oldHole->setMarked(false);
@@ -183,14 +185,30 @@ void Alquerque::UpdateGameStatus() {
     }
 }
 
-void Alquerque::Rulebook() {
-
+void Alquerque::UnlockEnemyButtons(Hole* hole) {
+    if(hole->row() == m_oldHole->row()) {
+        if(m_holes[hole->col()][hole->col() + 1]->state() != HoleState(m_player)) {
+            m_holes[hole->row()][hole->col() + 1]->setEnabled(true);
+        } else if(m_holes[hole->col()][hole->col() - 1]->state() != HoleState(m_player)) {
+            m_holes[hole->row()][hole->col() - 1]->setEnabled(true);
+        }
+    } else if(hole->col() == m_oldHole->col()) {
+        if(m_holes[hole->row() + 1][hole->col()]->state() != HoleState(m_player)) {
+            m_holes[hole->row() + 1][hole->col()]->setEnabled(true);
+        } else if(m_holes[hole->row() - 1][hole->col()]->state() != HoleState(m_player)) {
+            m_holes[hole->row() - 1][hole->col()]->setEnabled(true);
+        }
+    }  else if(m_holes[hole->row() + 1][hole->col() + 1]->state() != HoleState(m_player)) {
+       m_holes[hole->row() + 1][hole->col() + 1]->setEnabled(true);
+    } else if(m_holes[hole->row() - 1][hole->col() - 1]->state() != HoleState(m_player)) {
+       m_holes[hole->row() - 1][hole->col() - 1]->setEnabled(true);
+    }
 }
 
 // Rules
-void Alquerque::UnlockButtons() {
+void Alquerque::UnlockButtons(Hole* hole) {
     Hole* neigthbors[8];
-    this->NeighboringHoles(m_oldHole, neigthbors);
+    this->NeighboringHoles(hole, neigthbors);
 
     for(int i = 0; i < 8; i++){
         if(neigthbors[i] != NULL) {
@@ -251,6 +269,7 @@ void Alquerque::EatPiece(Hole* hole) {
 
     if(eHole != NULL){
         eHole->setState(Hole::EmptyState);
+        this->UnlockButtons(eHole);
     }
 }
 

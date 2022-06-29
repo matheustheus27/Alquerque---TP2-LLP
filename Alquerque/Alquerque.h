@@ -45,8 +45,8 @@ private slots:
     void Play(int id);
     void ExecuteTurn(Hole* hole);
     void Restart();
-    void Rulebook();
-    void UnlockButtons();
+    void UnlockEnemyButtons(Hole* hole);
+    void UnlockButtons(Hole* hole);
     void LockButtons(Hole* hole);
     void NeighboringHoles(Hole* hole,  Hole* negithbors[]);
     void SwitchPlayer();
