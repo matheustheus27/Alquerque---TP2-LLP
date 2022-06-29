@@ -48,7 +48,7 @@ void Hole::UpdateHole() {
         case Hole::EmptyState:
             if(m_enabled) {
                 icon.addPixmap(QPixmap(m_marked ? ":/EmptySelectable" : ":/Empty"));
-                icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);
+                icon.addPixmap(QPixmap(":/Empty"), QIcon::Disabled);
             } else {
                 icon.addPixmap(QPixmap(":/EmptyDisabled"));
                 icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);

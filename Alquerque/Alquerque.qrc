@@ -24,5 +24,7 @@
         <file alias="EmptySelectable">Assets/EmptyButton_Selectable.png</file>
         <file alias="EmptyDisabled">Assets/EmptyButton_Disabled.png</file>
         <file alias="GameFont">Assets/04B.TTF</file>
+        <file alias="BlueEnd">Assets/BlueButton_Turn.png</file>
+        <file alias="RedEnd">Assets/RedButton_Turn.png</file>
     </qresource>
 </RCC>

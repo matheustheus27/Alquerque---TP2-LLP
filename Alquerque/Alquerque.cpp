@@ -3,6 +3,10 @@
 
 #include <QSignalMapper>
 #include <QMessageBox>
+#include <iostream>
+#include <list>
+#include <vector>
+#include <string>
 
 Alquerque::Player PlayerState(Hole::State state) {
     switch (state) {
@@ -41,6 +45,9 @@ Alquerque::Alquerque(QWidget *parent) : QMainWindow(parent), ui(new Ui::Alquerqu
     //Sair do Jogo
     QObject::connect(ui->actionSair, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     QObject::connect(ui->exit, SIGNAL(clicked(bool)), qApp, SLOT(quit()));
+
+    //Finaliza Jogada
+    //QObject::connect(ui->playerTurnEnd, SIGNAL(clicked(bool)), this, ExecuteTurn());
 
     QSignalMapper* map = new QSignalMapper(this);
     for(int r = 0; r < 5; r++) {
@@ -85,31 +92,51 @@ void Alquerque::SwitchPlayer() {
     this->UpdateGameStatus();
 }
 
+void Alquerque::ExecuteTurn(Hole* hole) {
+
+}
+
 void Alquerque::Play(int id) {
     Hole* hole = m_holes[id / 5][id % 5];
 
     if(m_play == Alquerque::Origin) {
-        hole->setMarked(true);
-        hole->setState(HoleState(m_player));
-        m_oldHole = hole;
-        m_play = Alquerque::Destiny;
+        if(HoleState(m_player) == hole->state()) {
+            hole->setMarked(true);
+            hole->setState(HoleState(m_player));
+            m_oldHole = hole;
+            m_play = Alquerque::Destiny;
+        } else {
+            this->SendMessage("Não é permitido selecionar peças do outro jogador.");
+        }
     } else {
-        hole->setState(HoleState(m_player));
-        m_oldHole->setState(Hole::EmptyState);
-        this->Rulebook();
-        m_play = Alquerque::Origin;
-        emit endTurn();
-    }
+        if(m_oldHole->objectName() != hole->objectName()) {
+            if(hole->state() == Hole::EmptyState) {
+                hole->setState(HoleState(m_player));
+                m_oldHole->setState(Hole::EmptyState);
 
-    qDebug() << "Origem: " << m_oldHole->objectName();
-    qDebug() << "Destino: " << hole->objectName();
-    if(m_play == Alquerque::Origin){
-        qDebug() << "ORIGEM";
-    } else {
-        qDebug() << "DESTINO";
+                this->EatPiece(hole);
+
+                this->LockButtons(hole);
+
+                this->UnlockButtons();
+
+                m_oldHole->setEnabled(true);
+                m_oldHole->setMarked(false);
+                m_play = Alquerque::Origin;
+
+                emit endTurn();
+            } else {
+                this->SendMessage("Não é permitido sobrepor uma peça.");
+            }
+        } else {
+            this->SendMessage("O destino da peça não pode ser a sua origem.");
+        }
     }
 }
 
+void Alquerque::SendMessage(const char* message) {
+    QMessageBox::warning(this, tr("Jogada Invalida"), tr(message));
+}
 void Alquerque::Restart() {
     for(int r = 0; r < 5; r++) {
         for(int c = 0; c < 5; c++) {
@@ -157,183 +184,273 @@ void Alquerque::UpdateGameStatus() {
 }
 
 void Alquerque::Rulebook() {
-    switch (m_oldHole->row()) {
+
+}
+
+// Rules
+void Alquerque::UnlockButtons() {
+    Hole* neigthbors[8];
+    this->NeighboringHoles(m_oldHole, neigthbors);
+
+    for(int i = 0; i < 8; i++){
+        if(neigthbors[i] != NULL) {
+            neigthbors[i]->setEnabled(true);
+        } else {
+            break;
+        }
+    }
+}
+
+void Alquerque::LockButtons(Hole* hole) {
+    Hole* neigthbors[8];
+    this->NeighboringHoles(hole, neigthbors);
+
+    for(int i = 0; i < 8; i++){
+        if(neigthbors[i] != NULL) {
+            Hole* aux[8];
+            this->NeighboringHoles(neigthbors[i], aux);
+
+            for(int j = 0; j < 8; j++){
+                if(aux[j] != NULL) {
+                    if(aux[j]->state() == Hole::EmptyState) {
+                        neigthbors[i]->setEnabled(true);
+                        break;
+                    } else {
+                        neigthbors[i]->setEnabled(false);
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+}
+
+void Alquerque::EatPiece(Hole* hole) {
+    Hole* eHole = NULL;
+
+    if(m_oldHole->row() == hole->row()) {
+        if(m_oldHole->col() + 1 == hole->col() - 1){
+            eHole = m_holes[m_oldHole->row()][m_oldHole->col() + 1];
+        } else if(m_oldHole->col() - 1 == hole->col() + 1){
+            eHole = m_holes[m_oldHole->row()][m_oldHole->col() - 1];
+        }
+    } else if(m_oldHole->col() == hole->col()) {
+        if(m_oldHole->row() + 1 == hole->row() - 1){
+            eHole = m_holes[m_oldHole->row() + 1][m_oldHole->col()];
+        } else if(m_oldHole->row() - 1 == hole->row() + 1){
+            eHole = m_holes[m_oldHole->row() - 1][m_oldHole->col()];
+        }
+    } else if(m_oldHole->row() + 1 == hole->row() - 1 && m_oldHole->col() + 1 == hole->col() - 1) {
+            eHole = m_holes[m_oldHole->row() + 1][m_oldHole->col() + 1];
+    } else if(m_oldHole->row() - 1 == hole->row() + 1 && m_oldHole->col() - 1 == hole->col() + 1) {
+        eHole = m_holes[m_oldHole->row() - 1][m_oldHole->col() - 1];
+    }
+
+
+    if(eHole != NULL){
+        eHole->setState(Hole::EmptyState);
+    }
+}
+
+// Funções Auxiliares
+
+void Alquerque::NeighboringHoles(Hole* hole, Hole* negithbors[]) {
+    for(int i = 0; i < 8; i++) {
+        negithbors[i] = NULL;
+    }
+    switch (hole->row()) {
         case 0:
-            switch (m_oldHole->col()) {
+            switch (hole->col()) {
                 case 0:
-                    m_holes[0][1]->setEnabled(true);
-                    m_holes[1][0]->setEnabled(true);
-                    m_holes[1][1]->setEnabled(true);
+                    negithbors[0] = m_holes[0][1];
+                    negithbors[1] = m_holes[1][0];
+                    negithbors[2] = m_holes[1][1];
                     break;
                 case 1:
-                    m_holes[0][0]->setEnabled(true);
-                    m_holes[0][2]->setEnabled(true);
-                    m_holes[1][1]->setEnabled(true);
+                    negithbors[0] = m_holes[0][0];
+                    negithbors[1] = m_holes[0][2];
+                    negithbors[2] = m_holes[1][1];
                     break;
                 case 2:
-                    m_holes[0][1]->setEnabled(true);
-                    m_holes[0][3]->setEnabled(true);
-                    m_holes[1][1]->setEnabled(true);
-                    m_holes[1][2]->setEnabled(true);
-                    m_holes[1][3]->setEnabled(true);
+                    negithbors[0] = m_holes[0][1];
+                    negithbors[1] = m_holes[0][3];
+                    negithbors[2] = m_holes[1][1];
+                    negithbors[3] = m_holes[1][2];
+                    negithbors[4] = m_holes[1][3];
                     break;
                 case 3:
-                    m_holes[0][2]->setEnabled(true);
-                    m_holes[0][4]->setEnabled(true);
-                    m_holes[1][3]->setEnabled(true);
+                    negithbors[0] = m_holes[0][2];
+                    negithbors[1] = m_holes[0][4];
+                    negithbors[2] = m_holes[1][3];
                     break;
                 case 4:
-                    m_holes[0][3]->setEnabled(true);
-                    m_holes[1][3]->setEnabled(true);
-                    m_holes[1][4]->setEnabled(true);
+                    negithbors[0] = m_holes[0][3];
+                    negithbors[1] = m_holes[1][3];
+                    negithbors[2] = m_holes[1][4];
                     break;
             }
             break;
         case 1:
-            switch (m_oldHole->col()) {
+            switch (hole->col()) {
                 case 0:
-                    m_holes[0][0]->setEnabled(true);
-                    m_holes[1][1]->setEnabled(true);
-                    m_holes[2][0]->setEnabled(true);
+                    negithbors[0] = m_holes[0][0];
+                    negithbors[1] = m_holes[1][1];
+                    negithbors[2] = m_holes[2][0];
                     break;
                 case 1:
-                    m_holes[0][0]->setEnabled(true);
-                    m_holes[0][1]->setEnabled(true);
-                    m_holes[0][2]->setEnabled(true);
-                    m_holes[1][0]->setEnabled(true);
-                    m_holes[1][2]->setEnabled(true);
-                    m_holes[2][0]->setEnabled(true);
-                    m_holes[2][1]->setEnabled(true);
-                    m_holes[2][2]->setEnabled(true);
+                    negithbors[0] = m_holes[0][0];
+                    negithbors[1] = m_holes[0][1];
+                    negithbors[2] = m_holes[0][2];
+                    negithbors[3] = m_holes[1][0];
+                    negithbors[4] = m_holes[1][2];
+                    negithbors[5] = m_holes[2][0];
+                    negithbors[6] = m_holes[2][1];
+                    negithbors[7] = m_holes[2][2];
                     break;
                 case 2:
-                    m_holes[0][2]->setEnabled(true);
-                    m_holes[1][1]->setEnabled(true);
-                    m_holes[1][3]->setEnabled(true);
-                    m_holes[2][2]->setEnabled(true);
+                    negithbors[0] = m_holes[0][2];
+                    negithbors[1] = m_holes[1][1];
+                    negithbors[2] = m_holes[1][3];
+                    negithbors[3] = m_holes[2][2];
                     break;
                 case 3:
-                    m_holes[0][2]->setEnabled(true);
-                    m_holes[0][3]->setEnabled(true);
-                    m_holes[0][4]->setEnabled(true);
-                    m_holes[1][2]->setEnabled(true);
-                    m_holes[1][4]->setEnabled(true);
-                    m_holes[2][2]->setEnabled(true);
-                    m_holes[2][3]->setEnabled(true);
-                    m_holes[2][4]->setEnabled(true);
+                    negithbors[0] = m_holes[0][2];
+                    negithbors[1] = m_holes[0][3];
+                    negithbors[2] = m_holes[0][4];
+                    negithbors[3] = m_holes[1][2];
+                    negithbors[4] = m_holes[1][4];
+                    negithbors[5] = m_holes[2][2];
+                    negithbors[6] = m_holes[2][3];
+                    negithbors[7] = m_holes[2][4];
                     break;
                 case 4:
-                    m_holes[0][4]->setEnabled(true);
-                    m_holes[1][3]->setEnabled(true);
-                    m_holes[2][4]->setEnabled(true);
+                    negithbors[0] = m_holes[0][4];
+                    negithbors[1] = m_holes[1][3];
+                    negithbors[2] = m_holes[2][4];
                     break;
             }
             break;
         case 2:
-            switch (m_oldHole->col()) {
+            switch (hole->col()) {
                 case 0:
-                    m_holes[1][0]->setEnabled(true);
-                    m_holes[2][1]->setEnabled(true);
-                    m_holes[3][0]->setEnabled(true);
+                    negithbors[0] = m_holes[1][0];
+                    negithbors[1] = m_holes[2][1];
+                    negithbors[2] = m_holes[3][0];
                     break;
                 case 1:
-                    m_holes[1][1]->setEnabled(true);
-                    m_holes[2][0]->setEnabled(true);
-                    m_holes[2][2]->setEnabled(true);
-                    m_holes[3][1]->setEnabled(true);
+                    negithbors[0] = m_holes[1][1];
+                    negithbors[1] = m_holes[2][0];
+                    negithbors[2] = m_holes[2][2];
+                    negithbors[3] = m_holes[3][1];
                     break;
                 case 2:
-                    m_holes[1][1]->setEnabled(true);
-                    m_holes[1][2]->setEnabled(true);
-                    m_holes[1][3]->setEnabled(true);
-                    m_holes[2][1]->setEnabled(true);
-                    m_holes[2][3]->setEnabled(true);
-                    m_holes[3][1]->setEnabled(true);
-                    m_holes[3][2]->setEnabled(true);
-                    m_holes[3][3]->setEnabled(true);
+                    negithbors[0] = m_holes[1][1];
+                    negithbors[1] = m_holes[1][2];
+                    negithbors[2] = m_holes[1][3];
+                    negithbors[3] = m_holes[2][1];
+                    negithbors[4] = m_holes[2][3];
+                    negithbors[5] = m_holes[3][1];
+                    negithbors[6] = m_holes[3][2];
+                    negithbors[7] = m_holes[3][3];
+                    break;
                 case 3:
-                    m_holes[1][3]->setEnabled(true);
-                    m_holes[2][2]->setEnabled(true);
-                    m_holes[2][4]->setEnabled(true);
-                    m_holes[3][3]->setEnabled(true);
+                    negithbors[0] = m_holes[1][3];
+                    negithbors[1] = m_holes[2][2];
+                    negithbors[2] = m_holes[2][4];
+                    negithbors[3] = m_holes[3][3];
                     break;
                 case 4:
-                    m_holes[1][4]->setEnabled(true);
-                    m_holes[2][3]->setEnabled(true);
-                    m_holes[3][4]->setEnabled(true);
+                    negithbors[0] = m_holes[1][4];
+                    negithbors[1] = m_holes[2][3];
+                    negithbors[2] = m_holes[3][4];
                     break;
             }
             break;
         case 3:
-        switch (m_oldHole->col()) {
-            case 0:
-                m_holes[2][0]->setEnabled(true);
-                m_holes[3][1]->setEnabled(true);
-                m_holes[4][0]->setEnabled(true);
-                break;
-            case 1:
-                m_holes[2][0]->setEnabled(true);
-                m_holes[2][1]->setEnabled(true);
-                m_holes[2][2]->setEnabled(true);
-                m_holes[3][0]->setEnabled(true);
-                m_holes[3][2]->setEnabled(true);
-                m_holes[4][0]->setEnabled(true);
-                m_holes[4][1]->setEnabled(true);
-                m_holes[4][2]->setEnabled(true);
-                break;
-            case 2:
-                m_holes[2][2]->setEnabled(true);
-                m_holes[3][1]->setEnabled(true);
-                m_holes[3][3]->setEnabled(true);
-                m_holes[4][2]->setEnabled(true);
-                break;
-            case 3:
-                m_holes[2][2]->setEnabled(true);
-                m_holes[2][3]->setEnabled(true);
-                m_holes[2][4]->setEnabled(true);
-                m_holes[3][2]->setEnabled(true);
-                m_holes[3][4]->setEnabled(true);
-                m_holes[4][2]->setEnabled(true);
-                m_holes[4][3]->setEnabled(true);
-                m_holes[4][4]->setEnabled(true);
-                break;
-            case 4:
-                m_holes[2][4]->setEnabled(true);
-                m_holes[3][3]->setEnabled(true);
-                m_holes[4][4]->setEnabled(true);
-                break;
-        }
-            break;
-        case 4:
-            switch (m_oldHole->col()) {
+            switch (hole->col()) {
                 case 0:
-                    m_holes[3][0]->setEnabled(true);
-                    m_holes[3][1]->setEnabled(true);
-                    m_holes[4][1]->setEnabled(true);
+                    negithbors[0] = m_holes[2][0];
+                    negithbors[1] = m_holes[3][1];
+                    negithbors[2] = m_holes[4][0];
                     break;
                 case 1:
-                    m_holes[4][0]->setEnabled(true);
-                    m_holes[3][1]->setEnabled(true);
-                    m_holes[4][2]->setEnabled(true);
+                    negithbors[0] = m_holes[2][0];
+                    negithbors[1] = m_holes[2][1];
+                    negithbors[2] = m_holes[2][2];
+                    negithbors[3] = m_holes[3][0];
+                    negithbors[4] = m_holes[3][2];
+                    negithbors[5] = m_holes[4][0];
+                    negithbors[6] = m_holes[4][1];
+                    negithbors[7] = m_holes[4][2];
                     break;
                 case 2:
-                    m_holes[3][1]->setEnabled(true);
-                    m_holes[3][2]->setEnabled(true);
-                    m_holes[3][3]->setEnabled(true);
-                    m_holes[4][1]->setEnabled(true);
-                    m_holes[4][3]->setEnabled(true);
+                    negithbors[0] = m_holes[2][2];
+                    negithbors[1] = m_holes[3][1];
+                    negithbors[2] = m_holes[3][3];
+                    negithbors[3] = m_holes[4][2];
                     break;
                 case 3:
-                    m_holes[3][3]->setEnabled(true);
-                    m_holes[4][2]->setEnabled(true);
-                    m_holes[4][4]->setEnabled(true);
+                    negithbors[0] = m_holes[2][2];
+                    negithbors[1] = m_holes[2][3];
+                    negithbors[2] = m_holes[2][4];
+                    negithbors[3] = m_holes[3][2];
+                    negithbors[4] = m_holes[3][4];
+                    negithbors[5] = m_holes[4][2];
+                    negithbors[6] = m_holes[4][3];
+                    negithbors[7] = m_holes[4][4];
                     break;
                 case 4:
-                    m_holes[3][3]->setEnabled(true);
-                    m_holes[3][4]->setEnabled(true);
-                    m_holes[4][3]->setEnabled(true);
+                    negithbors[0] = m_holes[2][4];
+                    negithbors[1] = m_holes[3][3];
+                    negithbors[2] = m_holes[4][4];
+                    break;
+            }
+            break;
+        case 4:
+            switch (hole->col()) {
+                case 0:
+                    negithbors[0] = m_holes[3][0];
+                    negithbors[1] = m_holes[3][1];
+                    negithbors[2] = m_holes[4][1];
+                    break;
+                case 1:
+                    negithbors[0] = m_holes[4][0];
+                    negithbors[1] = m_holes[3][1];
+                    negithbors[2] = m_holes[4][2];
+                    break;
+                case 2:
+                    negithbors[0] = m_holes[3][1];
+                    negithbors[1] = m_holes[3][2];
+                    negithbors[2] = m_holes[3][3];
+                    negithbors[3] = m_holes[4][1];
+                    negithbors[4] = m_holes[4][3];
+                    break;
+                case 3:
+                    negithbors[0] = m_holes[3][3];
+                    negithbors[1] = m_holes[4][2];
+                    negithbors[2] = m_holes[4][4];
+                    break;
+                case 4:
+                    negithbors[0] = m_holes[3][3];
+                    negithbors[1] = m_holes[3][4];
+                    negithbors[2] = m_holes[4][3];
                     break;
             }
             break;
     }
 }
+
+bool Alquerque::isNeighbor(Hole* hole, Hole* supNeighbor) {
+    Hole* neighbors[8];
+    this->NeighboringHoles(hole, neighbors);
+    for (int i = 0; i < 8; i++) {
+        if(neighbors[i]->objectName() == supNeighbor->objectName()){
+            return true;
+        }
+    }
+
+    return false;
+}
+
