@@ -114,6 +114,14 @@ void Alquerque::ExecuteTurn() {
 
     m_play = Alquerque::Origin;
 
+    qDebug() << "Red Points: " << m_RedPoint << " | Blue Points: " << m_BluePoint;
+
+    if(m_RedPoint <= 0) {
+        this->SendMessage("O Jogador Azul Venceu");
+    } else if(m_BluePoint <= 0) {
+        this->SendMessage("O Jogador Vermelho Venceu");
+    }
+
     emit endTurn();
 }
 
@@ -288,6 +296,12 @@ void Alquerque::EatPiece(Hole* hole) {
     if(eHole != NULL){
         eHole->setState(Hole::EmptyState);
         this->UnlockButtons(eHole);
+
+        if(m_player == Alquerque::RedPlayer) {
+            m_RedPoint--;
+        } else {
+            m_BluePoint--;
+        }
     }
 }
 

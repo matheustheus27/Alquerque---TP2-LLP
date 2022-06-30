@@ -41,8 +41,8 @@ private:
     Jogada m_play;
     Player m_player;
 
-    int m_RedPoint;
-    int m_BluePoint;
+    int m_RedPoint = 12;
+    int m_BluePoint = 12;
 
 private slots:
     void SendMessage(const char* message);
