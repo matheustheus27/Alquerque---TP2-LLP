@@ -110,7 +110,7 @@ void Alquerque::Play(int id) {
         }
     } else {
         if(m_oldHole->objectName() != hole->objectName()) {
-            if(hole->state() == Hole::EmptyState) {
+            if(hole->state() == Hole::EmptyState && this->isValidPlay(hole)) {
                 hole->setState(HoleState(m_player));
                 m_oldHole->setState(Hole::EmptyState);
 
@@ -128,7 +128,7 @@ void Alquerque::Play(int id) {
 
                 emit endTurn();
             } else {
-                this->SendMessage("Não é permitido sobrepor uma peça.");
+                this->SendMessage("Não é permitido mover a peça para a posição indicada.");
             }
         } else {
             this->SendMessage("O destino da peça não pode ser a sua origem.");
@@ -139,6 +139,7 @@ void Alquerque::Play(int id) {
 void Alquerque::SendMessage(const char* message) {
     QMessageBox::warning(this, tr("Jogada Invalida"), tr(message));
 }
+
 void Alquerque::Restart() {
     for(int r = 0; r < 5; r++) {
         for(int c = 0; c < 5; c++) {
@@ -471,5 +472,43 @@ bool Alquerque::isNeighbor(Hole* hole, Hole* supNeighbor) {
     }
 
     return false;
+}
+
+bool Alquerque::isValidPlay(Hole* hole) {
+    if(hole->row() == m_oldHole->row()) {
+        if((hole->col() + 2) == m_oldHole->col()) {
+            return true;
+        } else if((hole->col() - 2) == m_oldHole->col()) {
+            return true;
+        } else if((hole->col() + 1) == m_oldHole->col()) {
+            return true;
+        } else if((hole->col() - 1) == m_oldHole->col()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else if(hole->col() == m_oldHole->col()) {
+        if((hole->row() + 2) == m_oldHole->row()) {
+            return true;
+        } else if((hole->row() - 2) == m_oldHole->row()) {
+            return true;
+        } else if((hole->row() + 1) == m_oldHole->row()) {
+            return true;
+        } else if((hole->row() - 1) == m_oldHole->row()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else if((hole->row() + 2) == m_oldHole->row() && (hole->col() + 2) == m_oldHole->col()) {
+        return true;
+    } else if((hole->row() - 2) == m_oldHole->row() && (hole->col() - 2) == m_oldHole->col()) {
+        return true;
+    } else if((hole->row() + 1) == m_oldHole->row() && (hole->col() + 1) == m_oldHole->col()) {
+        return true;
+    } else if((hole->row() - 1) == m_oldHole->row() && (hole->col() - 1) == m_oldHole->col()) {
+        return true;
+    }
+
+  return false;
 }
 

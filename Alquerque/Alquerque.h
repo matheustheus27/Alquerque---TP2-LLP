@@ -55,5 +55,6 @@ private slots:
     void UpdateGameStatus();
 
     bool isNeighbor(Hole* hole, Hole* supNeighbor);
+    bool isValidPlay(Hole* hole);
 };
 #endif // ALQUERQUE_H
