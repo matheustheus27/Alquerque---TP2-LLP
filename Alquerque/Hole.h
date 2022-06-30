@@ -9,6 +9,7 @@ class Hole : public QPushButton
     Q_PROPERTY(int row READ row WRITE setRow)
     Q_PROPERTY(int col READ col WRITE setCol)
     Q_PROPERTY(State state READ state WRITE setState NOTIFY changedState)
+    Q_PROPERTY(Selectable selectable READ selectable WRITE setSelectable NOTIFY changedSelectable)
     Q_PROPERTY(bool marked READ isMarked WRITE setMarked NOTIFY changedMarked)
     Q_PROPERTY(bool e_enabled READ isEnabled WRITE setEnabled NOTIFY changedEnabled)
 
@@ -18,7 +19,13 @@ public:
         RedState,
         BlueState
     };
+    enum Selectable {
+        Red,
+        Blue
+    };
+
     Q_ENUM(State)
+    Q_ENUM(Selectable)
 
     explicit Hole(QWidget *parent = nullptr);
     virtual ~Hole();
@@ -32,6 +39,9 @@ public:
     State state() const {return m_state;}
     void setState(State state);
 
+    Selectable selectable() const {return m_selectable;}
+    void setSelectable(Selectable selectable);
+
     bool isMarked() const {return m_marked;}
     void setMarked(bool marked);
 
@@ -40,6 +50,7 @@ public:
 
 signals:
     void changedState(Hole::State state);
+    void changedSelectable(Hole::Selectable selectable);
     void changedMarked(bool marked);
     void changedEnabled(bool e_enabled);
 
@@ -49,6 +60,7 @@ private:
     bool m_marked;
     bool m_enabled;
     State m_state;
+    Selectable m_selectable;
 
 public slots:
     void Reset();

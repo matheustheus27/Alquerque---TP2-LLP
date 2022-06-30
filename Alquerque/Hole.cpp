@@ -1,7 +1,8 @@
 #include "Hole.h"
 
-Hole::Hole(QWidget *parent) : QPushButton(parent), m_row(0), m_col(0), m_state(Hole::EmptyState), m_marked(false), m_enabled(false) {
+Hole::Hole(QWidget *parent) : QPushButton(parent), m_row(0), m_col(0), m_state(Hole::EmptyState), m_selectable(Hole::Red), m_marked(false), m_enabled(false) {
     QObject::connect(this, SIGNAL(changedState(Hole::State)), this, SLOT(UpdateHole()));
+    QObject::connect(this, SIGNAL(changedSelectable(Hole::Selectable)), this, SLOT(UpdateHole()));
     QObject::connect(this, SIGNAL(changedMarked(bool)), this, SLOT(UpdateHole()));
     QObject::connect(this, SIGNAL(changedEnabled(bool)), this, SLOT(UpdateHole()));
 
@@ -16,6 +17,13 @@ void Hole::setState(State state) {
     if(m_state != state) {
         m_state = state;
         emit changedState(state);
+    }
+}
+
+void Hole::setSelectable(Selectable selectable) {
+    if(m_selectable != selectable) {
+        m_selectable = selectable;
+        emit changedSelectable(selectable);
     }
 }
 
@@ -46,12 +54,17 @@ void Hole::UpdateHole() {
 
     switch (m_state) {
         case Hole::EmptyState:
-            if(m_enabled) {
-                icon.addPixmap(QPixmap(m_marked ? ":/EmptySelectable" : ":/Empty"));
-                icon.addPixmap(QPixmap(":/Empty"), QIcon::Disabled);
+            if(m_marked) {
+                if(m_selectable == Hole::Red) {
+                    icon.addPixmap(QPixmap(":/RedSelectable"));
+                    icon.addPixmap(QPixmap(":/RedSelectable"), QIcon::Disabled);
+                } else {
+                    icon.addPixmap(QPixmap(":/BlueSelectable"));
+                    icon.addPixmap(QPixmap(":/BlueSelectable"), QIcon::Disabled);
+                }
             } else {
-                icon.addPixmap(QPixmap(":/EmptyDisabled"));
-                icon.addPixmap(QPixmap(":/EmptyDisabled"), QIcon::Disabled);
+                icon.addPixmap(QPixmap(":/Empty"));
+                icon.addPixmap(QPixmap(":/Empty"), QIcon::Disabled);
             }
             break;
         case Hole::RedState:
