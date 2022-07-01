@@ -26,5 +26,31 @@
         <file alias="GameFont">Assets/04B.TTF</file>
         <file alias="BlueEnd">Assets/BlueButton_Turn.png</file>
         <file alias="RedEnd">Assets/RedButton_Turn.png</file>
+        <file alias="B00">Assets/BluePieces_Counter/B00.png</file>
+        <file alias="B01">Assets/BluePieces_Counter/B01.png</file>
+        <file alias="B02">Assets/BluePieces_Counter/B02.png</file>
+        <file alias="B03">Assets/BluePieces_Counter/B03.png</file>
+        <file alias="B04">Assets/BluePieces_Counter/B04.png</file>
+        <file alias="B05">Assets/BluePieces_Counter/B05.png</file>
+        <file alias="B06">Assets/BluePieces_Counter/B06.png</file>
+        <file alias="B07">Assets/BluePieces_Counter/B07.png</file>
+        <file alias="B08">Assets/BluePieces_Counter/B08.png</file>
+        <file alias="B09">Assets/BluePieces_Counter/B09.png</file>
+        <file alias="B10">Assets/BluePieces_Counter/B10.png</file>
+        <file alias="B11">Assets/BluePieces_Counter/B11.png</file>
+        <file alias="B12">Assets/BluePieces_Counter/B12.png</file>
+        <file alias="R00">Assets/RedPieces_Counter/R00.png</file>
+        <file alias="R01">Assets/RedPieces_Counter/R01.png</file>
+        <file alias="R02">Assets/RedPieces_Counter/R02.png</file>
+        <file alias="R03">Assets/RedPieces_Counter/R03.png</file>
+        <file alias="R04">Assets/RedPieces_Counter/R04.png</file>
+        <file alias="R05">Assets/RedPieces_Counter/R05.png</file>
+        <file alias="R06">Assets/RedPieces_Counter/R06.png</file>
+        <file alias="R07">Assets/RedPieces_Counter/R07.png</file>
+        <file alias="R08">Assets/RedPieces_Counter/R08.png</file>
+        <file alias="R09">Assets/RedPieces_Counter/R09.png</file>
+        <file alias="R10">Assets/RedPieces_Counter/R10.png</file>
+        <file alias="R11">Assets/RedPieces_Counter/R11.png</file>
+        <file alias="R12">Assets/RedPieces_Counter/R12.png</file>
     </qresource>
 </RCC>

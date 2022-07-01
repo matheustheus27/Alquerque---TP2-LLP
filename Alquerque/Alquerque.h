@@ -41,8 +41,8 @@ private:
     Jogada m_play;
     Player m_player;
 
-    int m_RedPoint = 12;
-    int m_BluePoint = 12;
+    int m_RedPieces = 12;
+    int m_BluePieces = 12;
 
 private slots:
     void SendMessage(const char* message);
@@ -58,14 +58,16 @@ private slots:
 
     void About(); 
     void UpdateGameStatus();
+    void RedPiecesStatus();
+    void BluePiecesStatus();
 
     bool isNeighbor(Hole* hole, Hole* supNeighbor);
     bool isValidPlay(Hole* hole);
 
-    int redPoint() {return m_RedPoint;};
-    void setRedPoint(int point) {m_RedPoint = point;};
+    int redPieces() {return m_RedPieces;};
+    void setRedPieces(int pieces) {m_RedPieces = pieces;};
 
-    int bluePoint() {return m_BluePoint;};
-    void setBluePoint(int point) {m_BluePoint = point;};
+    int bluePieces() {return m_BluePieces;};
+    void setBluePieces(int pieces) {m_BluePieces = pieces;};
 };
 #endif // ALQUERQUE_H

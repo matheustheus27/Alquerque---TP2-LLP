@@ -114,11 +114,11 @@ void Alquerque::ExecuteTurn() {
 
     m_play = Alquerque::Origin;
 
-    qDebug() << "Red Points: " << m_RedPoint << " | Blue Points: " << m_BluePoint;
+    qDebug() << "Red Pieces: " << m_RedPieces << " | Blue Pieces: " << m_BluePieces;
 
-    if(m_RedPoint <= 0) {
+    if(m_RedPieces <= 0) {
         this->SendMessage("O Jogador Azul Venceu");
-    } else if(m_BluePoint <= 0) {
+    } else if(m_BluePieces <= 0) {
         this->SendMessage("O Jogador Vermelho Venceu");
     }
 
@@ -195,6 +195,8 @@ void Alquerque::Restart() {
 
     m_player = Alquerque::RedPlayer;
     m_play = Alquerque::Origin;
+    m_RedPieces  = 12;
+    m_RedPieces  = 12;
     this->UpdateGameStatus();
 }
 
@@ -210,6 +212,9 @@ void Alquerque::UpdateGameStatus() {
         ui->playerTurn->setIcon(QPixmap(":/BlueTurn"));
         ui->playerTurnEnd->setIcon(QPixmap(":/BlueEnd"));
     }
+
+    this->RedPiecesStatus();
+    this->BluePiecesStatus();
 }
 
 void Alquerque::UnlockEnemyButtons(Hole* hole) {
@@ -298,9 +303,9 @@ void Alquerque::EatPiece(Hole* hole) {
         this->UnlockButtons(eHole);
 
         if(m_player == Alquerque::RedPlayer) {
-            m_RedPoint--;
+            m_BluePieces--;
         } else {
-            m_BluePoint--;
+            m_RedPieces--;
         }
     }
 }
@@ -543,3 +548,90 @@ bool Alquerque::isValidPlay(Hole* hole) {
   return false;
 }
 
+void Alquerque::RedPiecesStatus() {
+    switch(m_RedPieces) {
+        case 12:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R12"));
+        break;
+        case 11:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R11"));
+        break;
+        case 10:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R10"));
+        break;
+        case 9:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R09"));
+        break;
+        case 8:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R08"));
+        break;
+        case 7:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R07"));
+        break;
+        case 6:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R06"));
+        break;
+        case 5:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R05"));
+        break;
+        case 4:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R04"));
+        break;
+        case 3:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R03"));
+        break;
+        case 2:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R02"));
+        break;
+        case 1:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R01"));
+        break;
+        case 0:
+            ui->redPiecesCounter->setIcon(QPixmap(":/R00"));
+        break;
+    }
+}
+
+void Alquerque::BluePiecesStatus() {
+    switch(m_BluePieces) {
+        case 12:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B12"));
+        break;
+        case 11:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B11"));
+        break;
+        case 10:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B10"));
+        break;
+        case 9:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B09"));
+        break;
+        case 8:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B08"));
+        break;
+        case 7:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B07"));
+        break;
+        case 6:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B06"));
+        break;
+        case 5:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B05"));
+        break;
+        case 4:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B04"));
+        break;
+        case 3:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B03"));
+        break;
+        case 2:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B02"));
+        break;
+        case 1:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B01"));
+        break;
+        case 0:
+            ui->bluePiecesCounter->setIcon(QPixmap(":/B00"));
+        break;
+    }
+}
