@@ -45,6 +45,8 @@ private:
     int m_RedPieces = 12;
     int m_BluePieces = 12;
 
+    bool m_SingleMove = false;
+
 private slots:
     void SendMessage(const char* message, const char* title, const char* type);
     void EatPiece(Hole* hole);
