@@ -243,37 +243,29 @@ void Alquerque::UnlockEnemyButtons(Hole* hole) {
 }
 
 void Alquerque::UnlockButtons(Hole* hole) {
-    Hole* neigthbors[8];
-    this->NeighboringHoles(hole, neigthbors);
+    this->NeighboringHoles(hole);
 
-    for(int i = 0; i < 8; i++){
-        if(neigthbors[i] != NULL) {
-            neigthbors[i]->setEnabled(true);
-        } else {
-            break;
-        }
+    for(Hole* current : m_neighbors){
+        current->setEnabled(true);
     }
 }
 
 void Alquerque::LockButtons(Hole* hole) {
-    Hole* neigthbors[8];
-    this->NeighboringHoles(hole, neigthbors);
+    this->NeighboringHoles(hole);
 
-    for(int i = 0; i < 8; i++){
-        if(neigthbors[i] != NULL) {
-            Hole* aux[8];
-            this->NeighboringHoles(neigthbors[i], aux);
+    std::vector<Hole*> aux = m_neighbors;
 
-            for(int j = 0; j < 8; j++){
-                if(aux[j] != NULL) {
-                    if(aux[j]->state() == Hole::EmptyState) {
-                        neigthbors[i]->setEnabled(true);
-                        break;
-                    } else {
-                        neigthbors[i]->setEnabled(false);
-                    }
+    for(Hole* current : aux){
+        this->NeighboringHoles(current);
+
+        for(Hole* aux_current : m_neighbors){
+            bool isEnabled = false;
+            if(!isEnabled) {
+                if(aux_current->state() == Hole::EmptyState) {
+                current->setEnabled(true);
+                isEnabled = true;
                 } else {
-                    break;
+                    current->setEnabled(false);
                 }
             }
         }
@@ -317,186 +309,185 @@ void Alquerque::EatPiece(Hole* hole) {
 
 // Rules
 
-void Alquerque::NeighboringHoles(Hole* hole, Hole* negithbors[]) {
-    for(int i = 0; i < 8; i++) {
-        negithbors[i] = NULL;
-    }
+void Alquerque::NeighboringHoles(Hole* hole) {
+    m_neighbors.clear();
+
     switch (hole->row()) {
         case 0:
             switch (hole->col()) {
                 case 0:
-                    negithbors[0] = m_holes[0][1];
-                    negithbors[1] = m_holes[1][0];
-                    negithbors[2] = m_holes[1][1];
+                    m_neighbors.push_back(m_holes[0][1]);
+                    m_neighbors.push_back(m_holes[1][0]);
+                    m_neighbors.push_back(m_holes[1][1]);
                     break;
                 case 1:
-                    negithbors[0] = m_holes[0][0];
-                    negithbors[1] = m_holes[0][2];
-                    negithbors[2] = m_holes[1][1];
+                    m_neighbors.push_back(m_holes[0][0]);
+                    m_neighbors.push_back(m_holes[0][2]);
+                    m_neighbors.push_back(m_holes[1][1]);
                     break;
                 case 2:
-                    negithbors[0] = m_holes[0][1];
-                    negithbors[1] = m_holes[0][3];
-                    negithbors[2] = m_holes[1][1];
-                    negithbors[3] = m_holes[1][2];
-                    negithbors[4] = m_holes[1][3];
+                    m_neighbors.push_back(m_holes[0][1]);
+                    m_neighbors.push_back(m_holes[0][3]);
+                    m_neighbors.push_back(m_holes[1][1]);
+                    m_neighbors.push_back(m_holes[1][2]);
+                    m_neighbors.push_back(m_holes[1][3]);
                     break;
                 case 3:
-                    negithbors[0] = m_holes[0][2];
-                    negithbors[1] = m_holes[0][4];
-                    negithbors[2] = m_holes[1][3];
+                    m_neighbors.push_back(m_holes[0][2]);
+                    m_neighbors.push_back(m_holes[0][4]);
+                    m_neighbors.push_back(m_holes[1][3]);
                     break;
                 case 4:
-                    negithbors[0] = m_holes[0][3];
-                    negithbors[1] = m_holes[1][3];
-                    negithbors[2] = m_holes[1][4];
+                    m_neighbors.push_back(m_holes[0][3]);
+                    m_neighbors.push_back(m_holes[1][3]);
+                    m_neighbors.push_back(m_holes[1][4]);
                     break;
             }
             break;
         case 1:
             switch (hole->col()) {
                 case 0:
-                    negithbors[0] = m_holes[0][0];
-                    negithbors[1] = m_holes[1][1];
-                    negithbors[2] = m_holes[2][0];
+                    m_neighbors.push_back(m_holes[0][0]);
+                    m_neighbors.push_back(m_holes[1][1]);
+                    m_neighbors.push_back(m_holes[2][0]);
                     break;
                 case 1:
-                    negithbors[0] = m_holes[0][0];
-                    negithbors[1] = m_holes[0][1];
-                    negithbors[2] = m_holes[0][2];
-                    negithbors[3] = m_holes[1][0];
-                    negithbors[4] = m_holes[1][2];
-                    negithbors[5] = m_holes[2][0];
-                    negithbors[6] = m_holes[2][1];
-                    negithbors[7] = m_holes[2][2];
+                    m_neighbors.push_back(m_holes[0][0]);
+                    m_neighbors.push_back(m_holes[0][1]);
+                    m_neighbors.push_back(m_holes[0][2]);
+                    m_neighbors.push_back(m_holes[1][0]);
+                    m_neighbors.push_back(m_holes[1][2]);
+                    m_neighbors.push_back(m_holes[2][0]);
+                    m_neighbors.push_back(m_holes[2][1]);
+                    m_neighbors.push_back(m_holes[2][2]);
                     break;
                 case 2:
-                    negithbors[0] = m_holes[0][2];
-                    negithbors[1] = m_holes[1][1];
-                    negithbors[2] = m_holes[1][3];
-                    negithbors[3] = m_holes[2][2];
+                    m_neighbors.push_back(m_holes[0][2]);
+                    m_neighbors.push_back(m_holes[1][1]);
+                    m_neighbors.push_back(m_holes[1][3]);
+                    m_neighbors.push_back(m_holes[2][2]);
                     break;
                 case 3:
-                    negithbors[0] = m_holes[0][2];
-                    negithbors[1] = m_holes[0][3];
-                    negithbors[2] = m_holes[0][4];
-                    negithbors[3] = m_holes[1][2];
-                    negithbors[4] = m_holes[1][4];
-                    negithbors[5] = m_holes[2][2];
-                    negithbors[6] = m_holes[2][3];
-                    negithbors[7] = m_holes[2][4];
+                    m_neighbors.push_back(m_holes[0][2]);
+                    m_neighbors.push_back(m_holes[0][3]);
+                    m_neighbors.push_back(m_holes[0][4]);
+                    m_neighbors.push_back(m_holes[1][2]);
+                    m_neighbors.push_back(m_holes[1][4]);
+                    m_neighbors.push_back(m_holes[2][2]);
+                    m_neighbors.push_back(m_holes[2][3]);
+                    m_neighbors.push_back(m_holes[2][4]);
                     break;
                 case 4:
-                    negithbors[0] = m_holes[0][4];
-                    negithbors[1] = m_holes[1][3];
-                    negithbors[2] = m_holes[2][4];
+                    m_neighbors.push_back(m_holes[0][4]);
+                    m_neighbors.push_back(m_holes[1][3]);
+                    m_neighbors.push_back(m_holes[2][4]);
                     break;
             }
             break;
         case 2:
             switch (hole->col()) {
                 case 0:
-                    negithbors[0] = m_holes[1][0];
-                    negithbors[1] = m_holes[2][1];
-                    negithbors[2] = m_holes[3][0];
+                    m_neighbors.push_back(m_holes[1][0]);
+                    m_neighbors.push_back(m_holes[2][1]);
+                    m_neighbors.push_back(m_holes[3][0]);
                     break;
                 case 1:
-                    negithbors[0] = m_holes[1][1];
-                    negithbors[1] = m_holes[2][0];
-                    negithbors[2] = m_holes[2][2];
-                    negithbors[3] = m_holes[3][1];
+                    m_neighbors.push_back(m_holes[1][1]);
+                    m_neighbors.push_back(m_holes[2][0]);
+                    m_neighbors.push_back(m_holes[2][2]);
+                    m_neighbors.push_back(m_holes[3][1]);
                     break;
                 case 2:
-                    negithbors[0] = m_holes[1][1];
-                    negithbors[1] = m_holes[1][2];
-                    negithbors[2] = m_holes[1][3];
-                    negithbors[3] = m_holes[2][1];
-                    negithbors[4] = m_holes[2][3];
-                    negithbors[5] = m_holes[3][1];
-                    negithbors[6] = m_holes[3][2];
-                    negithbors[7] = m_holes[3][3];
+                    m_neighbors.push_back(m_holes[1][1]);
+                    m_neighbors.push_back(m_holes[1][2]);
+                    m_neighbors.push_back(m_holes[1][3]);
+                    m_neighbors.push_back(m_holes[2][1]);
+                    m_neighbors.push_back(m_holes[2][3]);
+                    m_neighbors.push_back(m_holes[3][1]);
+                    m_neighbors.push_back(m_holes[3][2]);
+                    m_neighbors.push_back(m_holes[3][3]);
                     break;
                 case 3:
-                    negithbors[0] = m_holes[1][3];
-                    negithbors[1] = m_holes[2][2];
-                    negithbors[2] = m_holes[2][4];
-                    negithbors[3] = m_holes[3][3];
+                    m_neighbors.push_back(m_holes[1][3]);
+                    m_neighbors.push_back(m_holes[2][2]);
+                    m_neighbors.push_back(m_holes[2][4]);
+                    m_neighbors.push_back(m_holes[3][3]);
                     break;
                 case 4:
-                    negithbors[0] = m_holes[1][4];
-                    negithbors[1] = m_holes[2][3];
-                    negithbors[2] = m_holes[3][4];
+                    m_neighbors.push_back(m_holes[1][4]);
+                    m_neighbors.push_back(m_holes[2][3]);
+                    m_neighbors.push_back(m_holes[3][4]);
                     break;
             }
             break;
         case 3:
             switch (hole->col()) {
                 case 0:
-                    negithbors[0] = m_holes[2][0];
-                    negithbors[1] = m_holes[3][1];
-                    negithbors[2] = m_holes[4][0];
+                    m_neighbors.push_back(m_holes[2][0]);
+                    m_neighbors.push_back(m_holes[3][1]);
+                    m_neighbors.push_back(m_holes[4][0]);
                     break;
                 case 1:
-                    negithbors[0] = m_holes[2][0];
-                    negithbors[1] = m_holes[2][1];
-                    negithbors[2] = m_holes[2][2];
-                    negithbors[3] = m_holes[3][0];
-                    negithbors[4] = m_holes[3][2];
-                    negithbors[5] = m_holes[4][0];
-                    negithbors[6] = m_holes[4][1];
-                    negithbors[7] = m_holes[4][2];
+                    m_neighbors.push_back(m_holes[2][0]);
+                    m_neighbors.push_back(m_holes[2][1]);
+                    m_neighbors.push_back(m_holes[2][2]);
+                    m_neighbors.push_back(m_holes[3][0]);
+                    m_neighbors.push_back(m_holes[3][2]);
+                    m_neighbors.push_back(m_holes[4][0]);
+                    m_neighbors.push_back(m_holes[4][1]);
+                    m_neighbors.push_back(m_holes[4][2]);
                     break;
                 case 2:
-                    negithbors[0] = m_holes[2][2];
-                    negithbors[1] = m_holes[3][1];
-                    negithbors[2] = m_holes[3][3];
-                    negithbors[3] = m_holes[4][2];
+                    m_neighbors.push_back(m_holes[2][2]);
+                    m_neighbors.push_back(m_holes[3][1]);
+                    m_neighbors.push_back(m_holes[3][3]);
+                    m_neighbors.push_back(m_holes[4][2]);
                     break;
                 case 3:
-                    negithbors[0] = m_holes[2][2];
-                    negithbors[1] = m_holes[2][3];
-                    negithbors[2] = m_holes[2][4];
-                    negithbors[3] = m_holes[3][2];
-                    negithbors[4] = m_holes[3][4];
-                    negithbors[5] = m_holes[4][2];
-                    negithbors[6] = m_holes[4][3];
-                    negithbors[7] = m_holes[4][4];
+                    m_neighbors.push_back(m_holes[2][2]);
+                    m_neighbors.push_back(m_holes[2][3]);
+                    m_neighbors.push_back(m_holes[2][4]);
+                    m_neighbors.push_back(m_holes[3][2]);
+                    m_neighbors.push_back(m_holes[3][4]);
+                    m_neighbors.push_back(m_holes[4][2]);
+                    m_neighbors.push_back(m_holes[4][3]);
+                    m_neighbors.push_back(m_holes[4][4]);
                     break;
                 case 4:
-                    negithbors[0] = m_holes[2][4];
-                    negithbors[1] = m_holes[3][3];
-                    negithbors[2] = m_holes[4][4];
+                    m_neighbors.push_back(m_holes[2][4]);
+                    m_neighbors.push_back(m_holes[3][3]);
+                    m_neighbors.push_back(m_holes[4][4]);
                     break;
             }
             break;
         case 4:
             switch (hole->col()) {
                 case 0:
-                    negithbors[0] = m_holes[3][0];
-                    negithbors[1] = m_holes[3][1];
-                    negithbors[2] = m_holes[4][1];
+                    m_neighbors.push_back(m_holes[3][0]);
+                    m_neighbors.push_back(m_holes[3][1]);
+                    m_neighbors.push_back(m_holes[4][1]);
                     break;
                 case 1:
-                    negithbors[0] = m_holes[4][0];
-                    negithbors[1] = m_holes[3][1];
-                    negithbors[2] = m_holes[4][2];
+                    m_neighbors.push_back(m_holes[4][0]);
+                    m_neighbors.push_back(m_holes[3][1]);
+                    m_neighbors.push_back(m_holes[4][2]);
                     break;
                 case 2:
-                    negithbors[0] = m_holes[3][1];
-                    negithbors[1] = m_holes[3][2];
-                    negithbors[2] = m_holes[3][3];
-                    negithbors[3] = m_holes[4][1];
-                    negithbors[4] = m_holes[4][3];
+                    m_neighbors.push_back(m_holes[3][1]);
+                    m_neighbors.push_back(m_holes[3][2]);
+                    m_neighbors.push_back(m_holes[3][3]);
+                    m_neighbors.push_back(m_holes[4][1]);
+                    m_neighbors.push_back(m_holes[4][3]);
                     break;
                 case 3:
-                    negithbors[0] = m_holes[3][3];
-                    negithbors[1] = m_holes[4][2];
-                    negithbors[2] = m_holes[4][4];
+                    m_neighbors.push_back(m_holes[3][3]);
+                    m_neighbors.push_back(m_holes[4][2]);
+                    m_neighbors.push_back(m_holes[4][4]);
                     break;
                 case 4:
-                    negithbors[0] = m_holes[3][3];
-                    negithbors[1] = m_holes[3][4];
-                    negithbors[2] = m_holes[4][3];
+                    m_neighbors.push_back(m_holes[3][3]);
+                    m_neighbors.push_back(m_holes[3][4]);
+                    m_neighbors.push_back(m_holes[4][3]);
                     break;
             }
             break;
@@ -504,10 +495,9 @@ void Alquerque::NeighboringHoles(Hole* hole, Hole* negithbors[]) {
 }
 
 bool Alquerque::isNeighbor(Hole* hole, Hole* supNeighbor) {
-    Hole* neighbors[8];
-    this->NeighboringHoles(hole, neighbors);
-    for (int i = 0; i < 8; i++) {
-        if(neighbors[i]->objectName() == supNeighbor->objectName()){
+    this->NeighboringHoles(hole);
+    for (Hole* current : m_neighbors) {
+        if(current->objectName() == supNeighbor->objectName()){
             return true;
         }
     }
@@ -517,9 +507,9 @@ bool Alquerque::isNeighbor(Hole* hole, Hole* supNeighbor) {
 
 bool Alquerque::isValidPlay(Hole* hole) {
     if(hole->row() == m_afterHole->row()) {
-        if((hole->col() + 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() + 1]->state() != Hole::EmptyState) {
+        if((hole->col() + 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() + 1]->state() != Hole::EmptyState  && m_holes[hole->row()][hole->col()  + 1]->state() != m_afterHole->state()) {
             return true;
-        } else if((hole->col() - 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() - 1]->state() != Hole::EmptyState) {
+        } else if((hole->col() - 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() - 1]->state() != Hole::EmptyState  && m_holes[hole->row()][hole->col() - 1]->state() != m_afterHole->state()) {
             return true;
         } else if((hole->col() + 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
             return true;
@@ -529,9 +519,9 @@ bool Alquerque::isValidPlay(Hole* hole) {
             return false;
         }
     } else if(hole->col() == m_afterHole->col()) {
-        if((hole->row() + 2) == m_afterHole->row() && m_holes[hole->row() + 1][hole->col()]->state() != Hole::EmptyState) {
+        if((hole->row() + 2) == m_afterHole->row() && m_holes[hole->row() + 1][hole->col()]->state() != Hole::EmptyState && m_holes[hole->row() + 1][hole->col()]->state() != m_afterHole->state()) {
             return true;
-        } else if((hole->row() - 2) == m_afterHole->row() && m_holes[hole->row() - 1][hole->col()]->state() != Hole::EmptyState) {
+        } else if((hole->row() - 2) == m_afterHole->row() && m_holes[hole->row() - 1][hole->col()]->state() != Hole::EmptyState && m_holes[hole->row() - 1][hole->col()]->state() != m_afterHole->state()) {
             return true;
         } else if((hole->row() + 1) == m_afterHole->row() && m_afterHole->state() != Hole::EmptyState) {
             return true;
@@ -540,17 +530,19 @@ bool Alquerque::isValidPlay(Hole* hole) {
         } else {
             return false;
         }
-    } else if((hole->row() + 2) == m_afterHole->row() && (hole->col() + 2) == m_afterHole->col() && m_holes[hole->row() + 1][hole->col() + 1]->state() != Hole::EmptyState) {
+    } else if((hole->row() + 2) == m_afterHole->row() && (hole->col() + 2) == m_afterHole->col() && m_holes[hole->row() + 1][hole->col() + 1]->state() != Hole::EmptyState && m_holes[hole->row() + 1][hole->col() + 1]->state() != m_afterHole->state()) {
         return true;
-    } else if((hole->row() - 2) == m_afterHole->row() && (hole->col() - 2) == m_afterHole->col() && m_holes[hole->row() - 1][hole->col() - 1]->state() != Hole::EmptyState) {
+    } else if((hole->row() - 2) == m_afterHole->row() && (hole->col() - 2) == m_afterHole->col() && m_holes[hole->row() - 1][hole->col() - 1]->state() != Hole::EmptyState && m_holes[hole->row() - 1][hole->col() - 1]->state() != m_afterHole->state()) {
         return true;
     } else if((hole->row() + 1) == m_afterHole->row() && (hole->col() + 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
         return true;
     } else if((hole->row() - 1) == m_afterHole->row() && (hole->col() - 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
         return true;
+    } else if(this->isNeighbor(m_afterHole, hole) && m_afterHole->state() != Hole::EmptyState) {
+        return true;
     }
 
-  return false;
+    return false;
 }
 
 void Alquerque::RedPiecesStatus() {

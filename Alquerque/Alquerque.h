@@ -38,6 +38,7 @@ private:
     Hole* m_oldHole;
     Hole* m_afterHole;
     std::vector<Hole*> m_destinations;
+    std::vector<Hole*> m_neighbors;
     Jogada m_play;
     Player m_player;
 
@@ -53,7 +54,7 @@ private slots:
     void UnlockEnemyButtons(Hole* hole);
     void UnlockButtons(Hole* hole);
     void LockButtons(Hole* hole);
-    void NeighboringHoles(Hole* hole,  Hole* negithbors[]);
+    void NeighboringHoles(Hole* hole);
     void SwitchPlayer();
 
     void About(); 
