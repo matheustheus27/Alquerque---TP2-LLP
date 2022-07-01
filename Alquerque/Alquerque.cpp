@@ -117,9 +117,9 @@ void Alquerque::ExecuteTurn() {
     qDebug() << "Red Pieces: " << m_RedPieces << " | Blue Pieces: " << m_BluePieces;
 
     if(m_RedPieces <= 0) {
-        this->SendMessage("O Jogador Azul Venceu");
+        this->SendMessage("O Jogador Azul Venceu", "Fim de Jogo", "i");
     } else if(m_BluePieces <= 0) {
-        this->SendMessage("O Jogador Vermelho Venceu");
+        this->SendMessage("O Jogador Vermelho Venceu", "Fim de Jogo", "i");
     }
 
     emit endTurn();
@@ -142,7 +142,7 @@ void Alquerque::Play(int id) {
             m_destinations.clear();
             m_play = Alquerque::Destiny;
         } else {
-            this->SendMessage("Não é permitido selecionar peças do outro jogador.");
+            this->SendMessage("Não é permitido selecionar peças do outro jogador.", "Jogada Invalida", "w");
         }
     } else {
         if(m_oldHole->objectName() != hole->objectName()) {
@@ -150,18 +150,23 @@ void Alquerque::Play(int id) {
                 hole->setMarked(true);
                 m_destinations.push_back(hole);
             } else {
-                this->SendMessage("Não é permitido mover a peça para a posição indicada.");
+                this->SendMessage("Não é permitido mover a peça para a posição indicada.", "Jogada Invalida", "w");
             }
         } else {
-            this->SendMessage("O destino da peça não pode ser a sua origem.");
+            this->SendMessage("O destino da peça não pode ser a sua origem.", "Jogada Invalida", "w");
         }
     }
 
     m_afterHole = hole;
 }
 
-void Alquerque::SendMessage(const char* message) {
-    QMessageBox::warning(this, tr("Jogada Invalida"), tr(message));
+void Alquerque::SendMessage(const char* message, const char* title, const char* type) {
+    if(type == "w") {
+        QMessageBox::warning(this, tr(title), tr(message));
+    } else if(type == "i") {
+        QMessageBox::information(this, tr(title), tr(message));
+    }
+
 }
 
 void Alquerque::Restart() {
@@ -201,7 +206,7 @@ void Alquerque::Restart() {
 }
 
 void Alquerque::About() {
-    QMessageBox::information(this, tr("About"), tr("Alquerque\n\nAuthor: Matheus Thiago de Souza Ferreira\nEmail: matheustheus27@gmail.com\nGitHub: matheustheus27"));
+    this->SendMessage("Alquerque\n\nAuthor: Matheus Thiago de Souza Ferreira\nEmail: matheustheus27@gmail.com\nGitHub: matheustheus27", "Sobre",  "i");
 }
 
 void Alquerque::UpdateGameStatus() {

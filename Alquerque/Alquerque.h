@@ -45,7 +45,7 @@ private:
     int m_BluePieces = 12;
 
 private slots:
-    void SendMessage(const char* message);
+    void SendMessage(const char* message, const char* title, const char* type);
     void EatPiece(Hole* hole);
     void Play(int id);
     void ExecuteTurn();
