@@ -54,12 +54,13 @@ private slots:
     void ExecuteTurn();
     void Restart();
     void UnlockEnemyButtons(Hole* hole);
-    void UnlockButtons(Hole* hole);
+    void UnlockButtons();
     void LockButtons(Hole* hole);
     void NeighboringHoles(Hole* hole);
     void SwitchPlayer();
 
-    void About(); 
+    void About();
+    void HowToPlay();
     void UpdateGameStatus();
     void RedPiecesStatus();
     void BluePiecesStatus();

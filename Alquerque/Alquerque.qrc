@@ -52,5 +52,6 @@
         <file alias="R10">Assets/RedPieces_Counter/R10.png</file>
         <file alias="R11">Assets/RedPieces_Counter/R11.png</file>
         <file alias="R12">Assets/RedPieces_Counter/R12.png</file>
+        <file alias="InAbout">Assets/InGameButton_About.png</file>
     </qresource>
 </RCC>

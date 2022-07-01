@@ -39,8 +39,12 @@ Alquerque::Alquerque(QWidget *parent) : QMainWindow(parent), ui(new Ui::Alquerqu
     QObject::connect(ui->restart, SIGNAL(clicked(bool)), this, SLOT(Restart()));
 
     //Sobre o Jogo
-    QObject::connect(ui->actionAjuda, SIGNAL(triggered(bool)), this, SLOT(About()));
-    QObject::connect(ui->help, SIGNAL(clicked(bool)), this, SLOT(About()));
+    QObject::connect(ui->actionSobre, SIGNAL(triggered(bool)), this, SLOT(About()));
+    QObject::connect(ui->about, SIGNAL(clicked(bool)), this, SLOT(About()));
+
+    //Ajuda o Jogo
+    QObject::connect(ui->actionAjuda, SIGNAL(triggered(bool)), this, SLOT(HowToPlay()));
+    QObject::connect(ui->help, SIGNAL(clicked(bool)), this, SLOT(HowToPlay()));
 
     //Sair do Jogo
     QObject::connect(ui->actionSair, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
@@ -101,7 +105,7 @@ void Alquerque::ExecuteTurn() {
 
             this->LockButtons(hole);
 
-            this->UnlockButtons(m_oldHole);
+            this->UnlockButtons();
 
             this->UnlockEnemyButtons(hole);
 
@@ -219,6 +223,10 @@ void Alquerque::About() {
     this->SendMessage("Alquerque\n\nAuthor: Matheus Thiago de Souza Ferreira\nEmail: matheustheus27@gmail.com\nGitHub: matheustheus27", "Sobre",  "i");
 }
 
+void Alquerque::HowToPlay() {
+    this->SendMessage("1 - O jogador deve selecionar uma de suas peças que estão livres (cor mais clara) e então selecionar o local onde quer move-la (campo vazio).\n2 - Para comer as peças adversarias o jogador deve selecionar sua peça capaz de realizar a ação e então coloca-la na posição vazia após a peça adversaria.\n3 - É possivel comer varias peças ao mesmo tempo, para isso o jogador deve saltar as peças adversarias selecionando as posições vazias após elas.\n4 - O jogo funciona com base em turnos, para isso o jogador deve selecionar a jogada que deseja fazer e então clicar em 'Finalizar Turno'.\n5 - O vencedor é o jogador que retirar todas as peças do adversario do tabuleiro.", "Como Jogar",  "i");
+}
+
 void Alquerque::UpdateGameStatus() {
     if(m_player == Alquerque::RedPlayer) {
         ui->playerTurn->setIcon(QPixmap(":/RedTurn"));
@@ -234,39 +242,46 @@ void Alquerque::UpdateGameStatus() {
 
 void Alquerque::UnlockEnemyButtons(Hole* hole) {
     if(hole->row() == m_oldHole->row()) {
-        if(m_holes[hole->row()][hole->col() + 1]->state() != HoleState(m_player)) {
+        if((hole->col() + 1 <= 4) && m_holes[hole->row()][hole->col() + 1]->state() != HoleState(m_player)) {
             m_holes[hole->row()][hole->col() + 1]->setEnabled(true);
         }
 
-        if(m_holes[hole->col()][hole->col() - 1]->state() != HoleState(m_player)) {
+        if((hole->col() - 1 >= 0) && m_holes[hole->col()][hole->col() - 1]->state() != HoleState(m_player)) {
             m_holes[hole->row()][hole->col() - 1]->setEnabled(true);
         }
     }
 
     if(hole->col() == m_oldHole->col()) {
-        if(m_holes[hole->row() + 1][hole->col()]->state() != HoleState(m_player)) {
+        if((hole->row() + 1 <= 4) && m_holes[hole->row() + 1][hole->col()]->state() != HoleState(m_player)) {
             m_holes[hole->row() + 1][hole->col()]->setEnabled(true);
         }
 
-        if(m_holes[hole->row() - 1][hole->col()]->state() != HoleState(m_player)) {
+        if((hole->row() - 1 >= 0) && m_holes[hole->row() - 1][hole->col()]->state() != HoleState(m_player)) {
             m_holes[hole->row() - 1][hole->col()]->setEnabled(true);
         }
     }
 
-    if(m_holes[hole->row() + 1][hole->col() + 1]->state() != HoleState(m_player)) {
+    if(((hole->row() + 1 >= 0) && (hole->col() + 1 <= 4)) && m_holes[hole->row() + 1][hole->col() + 1]->state() != HoleState(m_player)) {
        m_holes[hole->row() + 1][hole->col() + 1]->setEnabled(true);
     }
 
-    if(m_holes[hole->row() - 1][hole->col() - 1]->state() != HoleState(m_player)) {
+    if(((hole->row() - 1 >= 0) && (hole->col() - 1 <= 4)) && m_holes[hole->row() - 1][hole->col() - 1]->state() != HoleState(m_player)) {
        m_holes[hole->row() - 1][hole->col() - 1]->setEnabled(true);
     }
 }
 
-void Alquerque::UnlockButtons(Hole* hole) {
-    this->NeighboringHoles(hole);
+void Alquerque::UnlockButtons() {
+    for(int r = 0; r < 5; r++) {
+        for(int c = 0; c < 5; c++) {
+            this->NeighboringHoles(m_holes[r][c]);
 
-    for(Hole* current : m_neighbors){
-        current->setEnabled(true);
+            for(Hole* current : m_neighbors){
+                if(current->state() == Hole::EmptyState) {
+                    m_holes[r][c]->setEnabled(true);
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -297,28 +312,26 @@ void Alquerque::EatPiece(Hole* hole) {
     Hole* eHole = NULL;
 
     if(m_oldHole->row() == hole->row()) {
-        if(m_oldHole->col() + 1 == hole->col() - 1){
+        if((m_oldHole->col() + 1) <= 4 && m_oldHole->col() + 1 == hole->col() - 1){
             eHole = m_holes[m_oldHole->row()][m_oldHole->col() + 1];
-        } else if(m_oldHole->col() - 1 == hole->col() + 1){
+        } else if((m_oldHole->col() - 1) >= 0 && m_oldHole->col() - 1 == hole->col() + 1){
             eHole = m_holes[m_oldHole->row()][m_oldHole->col() - 1];
         }
     } else if(m_oldHole->col() == hole->col()) {
-        if(m_oldHole->row() + 1 == hole->row() - 1){
+        if((m_oldHole->row() + 1) <= 4 && m_oldHole->row() + 1 == hole->row() - 1){
             eHole = m_holes[m_oldHole->row() + 1][m_oldHole->col()];
-        } else if(m_oldHole->row() - 1 == hole->row() + 1){
+        } else if((m_oldHole->row() - 1) >= 0 && (m_oldHole->row() - 1) >= 0 && m_oldHole->row() - 1 == hole->row() + 1){
             eHole = m_holes[m_oldHole->row() - 1][m_oldHole->col()];
         }
-    } else if(m_oldHole->row() + 1 == hole->row() - 1 && m_oldHole->col() + 1 == hole->col() - 1) {
+    } else if(((m_oldHole->row() + 1) <= 4 && (m_oldHole->col() + 1) <= 4) && m_oldHole->row() + 1 == hole->row() - 1 && m_oldHole->col() + 1 == hole->col() - 1) {
             eHole = m_holes[m_oldHole->row() + 1][m_oldHole->col() + 1];
-    } else if(m_oldHole->row() - 1 == hole->row() + 1 && m_oldHole->col() - 1 == hole->col() + 1) {
+    } else if(((m_oldHole->row() - 1) >= 0 && (m_oldHole->col() - 1) >= 0) && m_oldHole->row() - 1 == hole->row() + 1 && m_oldHole->col() - 1 == hole->col() + 1) {
         eHole = m_holes[m_oldHole->row() - 1][m_oldHole->col() - 1];
     }
 
 
     if(eHole != NULL){
         eHole->setState(Hole::EmptyState);
-        this->UnlockButtons(eHole);
-
         if(m_player == Alquerque::RedPlayer) {
             m_BluePieces--;
         } else {
@@ -528,40 +541,40 @@ bool Alquerque::isNeighbor(Hole* hole, Hole* supNeighbor) {
 bool Alquerque::isValidPlay(Hole* hole) {
     if(!m_SingleMove) {
         if(hole->row() == m_afterHole->row()) {
-            if((hole->col() + 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() + 1]->state() != Hole::EmptyState  && m_holes[hole->row()][hole->col()  + 1]->state() != m_afterHole->state()) {
+            if((hole->col() + 2 <= 4) && (hole->col() + 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() + 1]->state() != Hole::EmptyState  && m_holes[hole->row()][hole->col()  + 1]->state() != m_afterHole->state()) {
                 return true;
-            } else if((hole->col() - 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() - 1]->state() != Hole::EmptyState  && m_holes[hole->row()][hole->col() - 1]->state() != m_afterHole->state()) {
+            } else if((hole->col() - 2 >= 0) && (hole->col() - 2) == m_afterHole->col() && m_holes[hole->row()][hole->col() - 1]->state() != Hole::EmptyState  && m_holes[hole->row()][hole->col() - 1]->state() != m_afterHole->state()) {
                 return true;
-            } else if((hole->col() + 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
+            } else if((hole->col() + 1 <= 4) && (hole->col() + 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
                 m_SingleMove = true;
                 return true;
-            } else if((hole->col() - 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
+            } else if((hole->col() - 1 >= 0) && (hole->col() - 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
                 m_SingleMove = true;
                 return true;
             } else {
                 return false;
             }
         } else if(hole->col() == m_afterHole->col()) {
-            if((hole->row() + 2) == m_afterHole->row() && m_holes[hole->row() + 1][hole->col()]->state() != Hole::EmptyState && m_holes[hole->row() + 1][hole->col()]->state() != m_afterHole->state()) {
+            if((hole->row() + 2 <= 4) && (hole->row() + 2) == m_afterHole->row() && m_holes[hole->row() + 1][hole->col()]->state() != Hole::EmptyState && m_holes[hole->row() + 1][hole->col()]->state() != m_afterHole->state()) {
                 return true;
-            } else if((hole->row() - 2) == m_afterHole->row() && m_holes[hole->row() - 1][hole->col()]->state() != Hole::EmptyState && m_holes[hole->row() - 1][hole->col()]->state() != m_afterHole->state()) {
+            } else if(((hole->row() - 2 >= 0) && (hole->col() + 1 <= 4)) && (hole->row() - 2) == m_afterHole->row() && m_holes[hole->row() - 1][hole->col()]->state() != Hole::EmptyState && m_holes[hole->row() - 1][hole->col()]->state() != m_afterHole->state()) {
                 return true;
-            } else if((hole->row() + 1) == m_afterHole->row() && m_afterHole->state() != Hole::EmptyState) {
+            } else if((hole->row() + 1 <= 4) && (hole->row() + 1) == m_afterHole->row() && m_afterHole->state() != Hole::EmptyState) {
                 m_SingleMove = true;
                 return true;
-            } else if((hole->row() - 1) == m_afterHole->row() && m_afterHole->state() != Hole::EmptyState) {
+            } else if(((hole->row() - 1 >= 0)) && (hole->row() - 1) == m_afterHole->row() && m_afterHole->state() != Hole::EmptyState) {
                 m_SingleMove = true;
                 return true;
             } else {
                 return false;
             }
-        } else if((hole->row() + 2) == m_afterHole->row() && (hole->col() + 2) == m_afterHole->col() && m_holes[hole->row() + 1][hole->col() + 1]->state() != Hole::EmptyState && m_holes[hole->row() + 1][hole->col() + 1]->state() != m_afterHole->state()) {
+        } else if(((hole->row() + 2 <= 4) && (hole->col() + 2 <= 4)) && (hole->row() + 2) == m_afterHole->row() && (hole->col() + 2) == m_afterHole->col() && m_holes[hole->row() + 1][hole->col() + 1]->state() != Hole::EmptyState && m_holes[hole->row() + 1][hole->col() + 1]->state() != m_afterHole->state()) {
             return true;
-        } else if((hole->row() - 2) == m_afterHole->row() && (hole->col() - 2) == m_afterHole->col() && m_holes[hole->row() - 1][hole->col() - 1]->state() != Hole::EmptyState && m_holes[hole->row() - 1][hole->col() - 1]->state() != m_afterHole->state()) {
+        } else if(((hole->row() - 2 >= 0) && (hole->col() - 2 >= 0)) && (hole->row() - 2) == m_afterHole->row() && (hole->col() - 2) == m_afterHole->col() && m_holes[hole->row() - 1][hole->col() - 1]->state() != Hole::EmptyState && m_holes[hole->row() - 1][hole->col() - 1]->state() != m_afterHole->state()) {
             return true;
-        } else if((hole->row() + 1) == m_afterHole->row() && (hole->col() + 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
+        } else if(((hole->row() + 1 <= 4) && (hole->col() + 1 <= 4)) && (hole->row() + 1) == m_afterHole->row() && (hole->col() + 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
             return true;
-        } else if((hole->row() - 1) == m_afterHole->row() && (hole->col() - 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
+        } else if(((hole->row() - 1 >= 0) && (hole->col() - 1 >= 0)) && (hole->row() - 1) == m_afterHole->row() && (hole->col() - 1) == m_afterHole->col() && m_afterHole->state() != Hole::EmptyState) {
             return true;
         } else if(this->isNeighbor(m_afterHole, hole) && m_afterHole->state() != Hole::EmptyState) {
             return true;

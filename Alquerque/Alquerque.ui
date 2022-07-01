@@ -1243,7 +1243,7 @@
      <number>3</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="restart">
+   <widget class="QPushButton" name="about">
     <property name="geometry">
      <rect>
       <x>370</x>
@@ -1275,7 +1275,7 @@
     </property>
     <property name="icon">
      <iconset resource="Alquerque.qrc">
-      <normaloff>:/InRestart</normaloff>:/InRestart</iconset>
+      <normaloff>:/InAbout</normaloff>:/InAbout</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -1491,6 +1491,50 @@
      </size>
     </property>
    </widget>
+   <widget class="QPushButton" name="restart">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>10</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border: none;
+	outline: none;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="Alquerque.qrc">
+      <normaloff>:/InRestart</normaloff>:/InRestart</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1542,6 +1586,7 @@
     <property name="title">
      <string>Sobre</string>
     </property>
+    <addaction name="actionSobre"/>
     <addaction name="actionAjuda"/>
    </widget>
    <addaction name="menuJogo"/>
@@ -1576,6 +1621,20 @@
     </font>
    </property>
   </action>
+  <action name="actionSobre">
+   <property name="icon">
+    <iconset resource="Alquerque.qrc">
+     <normaloff>:/InAbout</normaloff>:/InAbout</iconset>
+   </property>
+   <property name="text">
+    <string>Sobre</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>04b</family>
+    </font>
+   </property>
+  </action>
   <action name="actionAjuda">
    <property name="icon">
     <iconset resource="Alquerque.qrc">
@@ -1583,11 +1642,6 @@
    </property>
    <property name="text">
     <string>Ajuda</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>04b</family>
-    </font>
    </property>
   </action>
  </widget>
